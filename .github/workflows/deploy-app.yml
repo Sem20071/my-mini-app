@@ -9,4 +9,3 @@ on:
       - 'ingress-grafana.yaml'
       - '**.md'
       - '.github/**'
-
