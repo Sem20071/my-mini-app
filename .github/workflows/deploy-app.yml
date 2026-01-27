@@ -52,6 +52,8 @@ jobs:
 
     - name: Deploy to Kubernetes
       if: startsWith(github.ref, 'refs/tags/')
+      env:
+        KUBECONFIG: /tmp/kubeconfig
       run: |
         mkdir -p ~/.kube
         echo "${{ secrets.KUBECONFIG }}" | base64 -d > $KUBECONFIG
