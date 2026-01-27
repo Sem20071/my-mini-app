@@ -16,8 +16,8 @@ spec:
         app: my-mini-app
     spec:
       containers:
-        - name: my-testapp-nginx
-          image: docker.io/aleksandrovsp/aleksandrov-my-miniapp:latest
+        - name: my-mini-app
+          image: docker.io/aleksandrovsp/aleksandrov-my-miniapp:1.0.0
           imagePullPolicy: Always
           ports:
             - containerPort: 80
