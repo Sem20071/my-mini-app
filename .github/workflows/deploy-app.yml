@@ -54,23 +54,24 @@ jobs:
       if: startsWith(github.ref, 'refs/tags/')
       run: |
         mkdir -p ~/.kube
-        echo "${{ secrets.KUBECONFIG }}" | base64 -d > ~/.kube/config
-        chmod 600 ~/.kube/config
+        echo "${{ secrets.KUBECONFIG }}" | base64 -d > $KUBECONFIG
+        chmod 600 $KUBECONFIG
+
         # Проверка валидности конфига
-        if ! kubectl cluster-info --kubeconfig ~/.kube/config > /dev/null 2>&1; then
+        if ! kubectl cluster-info > /dev/null 2>&1; then
           echo "ERROR: Cannot connect to Kubernetes cluster"
           exit 1
         fi
         # Проверка существования deployment
-        if ! kubectl get deployment my-mini-app --kubeconfig ~/.kube/config > /dev/null 2>&1; then
+        if ! kubectl get deployment my-mini-app > /dev/null 2>&1; then
           echo "ERROR: Deployment 'my-mini-app' not found"
           exit 1
         fi
 
         # Обновление deployment
         kubectl set image deployment/my-mini-app \
-          my-mini-app=${{ secrets.DOCKER_HUB_USERNAME }}/aleksandrov-my-miniapp:${{ steps.docker-tag.outputs.tag }} --kubeconfig ~/.kube/config
+          my-mini-app=${{ secrets.DOCKER_HUB_USERNAME }}/aleksandrov-my-miniapp:${{ steps.docker-tag.outputs.tag }}
 
     - name: Verify deployment
       if: startsWith(github.ref, 'refs/tags/')
-      run: kubectl rollout status deployment/my-mini-app --kubeconfig ~/.kube/config
+      run: kubectl rollout status deployment/my-mini-app
