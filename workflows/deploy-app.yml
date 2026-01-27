@@ -1,0 +1,12 @@
+name: Deploy docker image to Kubernetes
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*.*.*' ]
+    paths-ignore:
+      - 'deploy-prometheus.sh'
+      - 'ingress-grafana.yaml'
+      - '**.md'
+      - '.github/**'
+
