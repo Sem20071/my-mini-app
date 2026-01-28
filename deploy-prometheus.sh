@@ -12,7 +12,7 @@ kubectl wait --for condition=Established --all CustomResourceDefinition --namesp
 kubectl apply -f manifests/
 
 cd ../
-# Развертывание ingess для подключения к grafana
+# Настраиваем сервис для доступа к garafana
 kubectl apply -f ingress-grafana.yaml 
 # # Развертывание мини приложения и сервиса для доступа к нему.
 kubectl apply -f deployment-my-app.yaml

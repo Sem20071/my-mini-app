@@ -1,48 +1,69 @@
 ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: v1
+kind: Service
 metadata:
-  name: grafana-ingress
+  name: grafana-external
   namespace: monitoring
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  ingressClassName: nginx
-  rules:
-  - host: grafana.aleksandrov.local
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: grafana
-            port:
-              number: 3000
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: grafana
+  ports:
+  - name: http
+    port: 3000
+    targetPort: 3000
+    nodePort: 30080
+
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: grafana
+  name: grafana-external-access
   namespace: monitoring
 spec:
   podSelector:
     matchLabels:
       app.kubernetes.io/component: grafana
       app.kubernetes.io/name: grafana
+      app.kubernetes.io/part-of: kube-prometheus
   policyTypes:
   - Ingress
   ingress:
-   - from:
-    - podSelector:
-        matchLabels:
-          app.kubernetes.io/name: prometheus
+  - from: []
     ports:
-    - port: 3000
-      protocol: TCP
-  - from:
-    - namespaceSelector: {}
-    ports:
-    - port: 3000
-      protocol: TCP
+    - protocol: TCP
+      port: 3000
 
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: grafana-config
+  namespace: monitoring
+type: Opaque
+stringData:
+  grafana.ini: |
+    [server]
+    domain = ""
+    root_url = http:///grafana
+    serve_from_sub_path = true
+    http_port = 3000
+    
+    [security]
+    admin_user = admin
+    
+    [auth]
+    disable_login_form = false
+    
+    [auth.anonymous]
+    enabled = false
+    
+    [database]
+    
+    [session]
+    
+    [log]
+    mode = console
+    
+    [analytics]
+    check_for_updates = false

@@ -26,34 +26,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: my-mini-app-service
-  labels:
-    app: my-mini-app-service
+  name: my-miniapp-service
 spec:
-  type: ClusterIP
-  ports:
-    - port: 80
-      targetPort: 80
+  type: NodePort
   selector:
     app: my-mini-app
-
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: myapp-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-spec:
-  ingressClassName: nginx
-  rules:
-  - host: aleksandrov.local
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: my-mini-app-service
-            port:
-              number: 80
+  ports:
+    - name: my-mini-app-nginx
+      protocol: TCP
+      port: 80
+      nodePort: 30055
