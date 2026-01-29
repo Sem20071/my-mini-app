@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: my-mini-app
-          image: docker.io/aleksandrovsp/aleksandrov-my-miniapp:v1.0.2
+          image: docker.io/aleksandrovsp/aleksandrov-my-miniapp:1.0.0
           imagePullPolicy: Always
           ports:
             - containerPort: 80

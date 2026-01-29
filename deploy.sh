@@ -13,6 +13,6 @@ kubectl apply -f manifests/
 
 cd ../
 # Настраиваем сервис для доступа к garafana
-kubectl apply -f ingress-grafana.yaml 
+kubectl apply -f grafana-config.yaml
 # # Развертывание мини приложения и сервиса для доступа к нему.
 kubectl apply -f deployment-my-app.yaml
