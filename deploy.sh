@@ -12,7 +12,7 @@ kubectl wait --for condition=Established --all CustomResourceDefinition --namesp
 kubectl apply -f manifests/
 
 cd ../
-# Настраиваем сервис для доступа к garafana 
+# Настраиваем сервис для доступа к garafana
 kubectl apply -f grafana-config.yaml
 # # Развертывание мини приложения и сервиса для доступа к нему.
 kubectl apply -f deployment-my-app.yaml
