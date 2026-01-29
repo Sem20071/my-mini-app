@@ -5,7 +5,7 @@ metadata:
   labels:
     app: my-mini-app
 spec:
-  replicas: 3
+  replicas: 4
   selector:
     matchLabels:
       app: my-mini-app
