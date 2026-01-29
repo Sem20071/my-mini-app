@@ -5,7 +5,7 @@ metadata:
   labels:
     app: my-mini-app
 spec:
-  replicas: 4
+  replicas: 2
   selector:
     matchLabels:
       app: my-mini-app
@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: my-mini-app
-          image: docker.io/aleksandrovsp/aleksandrov-my-miniapp:1.0.0
+          image: docker.io/aleksandrovsp/aleksandrov-my-miniapp:v1.0.2
           imagePullPolicy: Always
           ports:
             - containerPort: 80
