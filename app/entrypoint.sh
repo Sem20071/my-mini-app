@@ -18,7 +18,7 @@ cat > /usr/share/nginx/html/index.html << EOF
 </head>
 <body>
     <div class="container">
-        <h1>Hello from Docker + Nginx!</h1>
+        <h1>Hello from Docker + Nginx! v1.0.1 </h1>
         <h1>Instance: $(hostname)</h1>
         <small>Generated: $(date)</small>
     </div>
